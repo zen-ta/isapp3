@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <link rel="stylesheet" href="index.css">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+
+    <script>
+
+        //table
+        function createstage() {
+            var html = '<table id="tbl" border="1" width="600" height="600">';
+            html += '<tr><td></td>';
+            var alph = ["A", "B", "C", "D", "E"];
+            for (var i = 0; i < 5; i++) {
+                html += '<td >' + alph[i] + '</td>';
+            };
+            html += '</tr>';
+            for (var i = 0; i < 5; i++) {
+                html += '<tr>';
+                html += '<td >' + (i + 1) + '</td>'
+                for (var j = 0; j < 5; j++) {
+                    html += '<td onclick="changeColor(this)" id="j' + j + '"> </td>';
+                }
+                html += '</tr>';
+            };
+            document.getElementById('table').innerHTML = html;
+        }
+
+        function changeColor(cell) {
+            cell.style.backgroundColor = "red";
+            var cellId = cell.id;  // セルのid属性を取得
+            var jValue = cellId.substring(1);  // jの値を抽出
+            console.log(jValue);
+        }
+
+    </script>
+
+</head>
+
+<body>
+    <h1>海戦ゲーム</h1>
+    <button onclick="createstage()">new room</button>
+    <hr>
+    <div id="table"></div>
+
+</body>
+
+</html>
