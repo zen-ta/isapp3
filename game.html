@@ -15,25 +15,37 @@
             html += '<tr><td></td>';
             var alph = ["A", "B", "C", "D", "E"];
             for (var i = 0; i < 5; i++) {
-                html += '<td >' + alph[i] + '</td>';
+                html += '<td>' + alph[i] + '</td>';
             };
             html += '</tr>';
             for (var i = 0; i < 5; i++) {
                 html += '<tr>';
                 html += '<td >' + (i + 1) + '</td>'
                 for (var j = 0; j < 5; j++) {
-                    html += '<td onclick="changeColor(this)" id="j' + j + '"> </td>';
+                    html += '<td onclick="changeColor(this)" id="j' + j + i + '"> </td>';
                 }
                 html += '</tr>';
             };
             document.getElementById('table').innerHTML = html;
+            document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
         }
 
+        i = 0;
         function changeColor(cell) {
-            cell.style.backgroundColor = "red";
+            if (i == 0) {
+                document.getElementById('comment').innerHTML = "駆逐艦を置く位置を選択してください";
+            }
+            if (i == 1) {
+                document.getElementById('comment').innerHTML = "潜水艦を置く位置を選択してください";
+            }
+            //3個置いたら次に行くようにする
+            var ship = ["W", "D", "S"];
             var cellId = cell.id;  // セルのid属性を取得
             var jValue = cellId.substring(1);  // jの値を抽出
             console.log(jValue);
+            cell.innerHTML = ship[i];
+            i = i + 1;
+
         }
 
     </script>
@@ -44,6 +56,7 @@
     <h1>海戦ゲーム</h1>
     <button onclick="createstage()">new room</button>
     <hr>
+    <p id="comment"></p>
     <div id="table"></div>
 
 </body>
