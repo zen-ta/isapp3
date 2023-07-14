@@ -25,55 +25,59 @@
             var room = objects[0];
             document.getElementById('roomname').innerHTML = room.name;
 
-            await refreshComments();
-            setInterval(refreshComments, 2000);
+            insertParticipation();
+            await refreshUsers();
+            setInterval(refreshUsers, 200);
         });
 
-        async function newComment() {
-            var name = document.getElementById('comment').value;
-            var sql = `insert into Comments (roomId, userId, comment, time) values(${roomId}, '${me.id}','${name}', now());`;
-            var commentId = await osql.connectInsert(sql);
-            console.log(commentId);
-
-            await refreshComments();
+        async function insertParticipation() {
+            var me = await osql.getMe();
+            var sql1 = `select * from Participations where roomId = ${roomId}`
+            var object = await osql.connect(sql1);
+            var order = object.length + 1;
+            var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
+            var participationId = await osql.connectInsert(sql2);
         }
 
-        async function refreshComments() {
-            var sql = `select * from Comments where roomId = ${roomId} order by time desc limit 10;`;
+        async function refreshUsers() {
+            var sql = `select Users.fname, Users.lname from Users inner join Participations on Users.id = Participations.userId where Participations.roomId = ${roomId};`;
             var objects = await osql.connect(sql);
-            console.log(objects);
             var html = '';
-            html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
-                html = html + '<tr>';
                 var object = objects[i];
-                html = html + `<td>${object.id}</td>`;
-                html = html + `<td>${object.time}</td>`;
-                html = html + `<td>${object.userId}</td>`;
-                html = html + `<td>${object.comment}</td>`;
-                html = html + '</tr>';
+                html = html + object.fname;
+                html = html + object.lname;
+                html = html + '<br>'
             }
-            html = html + '</table>';
-            document.getElementById('comments').innerHTML = html;
+            document.getElementById('members').innerHTML = html;
         }
+
+
+
+
+
+        async function exitgame() {
+            me = await osql.getMe();
+            var sql = `delete from Participations where userId = '${me.id}'`;
+            var commentId = await osql.connect(sql);
+            window.location.replace('index.html');
+        }
+
 
     </script>
 
 </head>
 
 <body>
-    <h1>talkroom <span id="roomname"></span></h1>
+    <h1>Game:<span id="roomname"></span></h1>
     <div style="text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <a href="index.html">top</a>
+        <button onclick="exitgame()" onclick="location.href='index.html'">退出</button>
     </div>
     <hr>
-    <div>
-        <input id="comment" type="text">
-        <button onclick="newComment()">new comment</button>
-    </div>
     <br>
-    <div id="comments"></div>
+    メンバー
+    <div id="members"></div>
 </body>
 
 </html>
