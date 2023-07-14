@@ -63,6 +63,30 @@
             window.location.replace('index.html');
         }
 
+        var connect = false;
+        async function Start() {
+            console.log(connect);
+            var sql3 = `update Rooms set turn = 1 where id =${roomId}`;
+            var turn = `select * from Rooms where turn =1 AND id = ${roomId}`;
+            var objects = await osql.connect(turn);
+            await osql.connect(sql3);
+            console.log(objects[0].id);
+            console.log(roomId);
+            if (objects[0].id = roomId) {
+                connect = true;
+            }
+            console.log(connect);
+        }
+
+
+
+        setInterval(() => {
+            if (connect == true) {
+                window.location.href = "game.html" + "?id=" + roomId
+            }
+
+        }, 2000);
+
 
     </script>
 
@@ -78,6 +102,8 @@
     <br>
     メンバー
     <div id="members"></div>
+    <hr>
+    <button id="start" onclick="Start()">始める</button>
 </body>
 
 </html>
