@@ -32,10 +32,10 @@
 
         async function insertParticipation() {
             var me = await osql.getMe();
-            var sql1 = `select * from Participations where roomId = ${roomId}`
+            var sql1 = `select * from participations where roomId = ${roomId}`
             var object = await osql.connect(sql1);
             var order = object.length + 1;
-            var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
+            var sql2 = `insert into participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
             var participationId = await osql.connectInsert(sql2);
         }
 
@@ -58,7 +58,7 @@
 
         async function exitgame() {
             me = await osql.getMe();
-            var sql = `delete from Participations where userId = '${me.id}'`;
+            var sql = `delete from participations where userId = '${me.id}'`;
             var commentId = await osql.connect(sql);
             window.location.replace('index.html');
         }
