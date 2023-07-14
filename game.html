@@ -8,9 +8,16 @@
 
 
     <script>
+        osql.requireLogin();
+
+        var me;
+        var roomId = osql.getParam('roomId');
+
+
 
         //tableはできてる
-        function createstage() {
+        $(document).ready(async function () {
+            //table
             var html = '<table id="tbl" border="1" width="600" height="600">';
             html += '<tr><td></td>';
             var alph = ["A", "B", "C", "D", "E"];
@@ -28,7 +35,8 @@
             };
             document.getElementById('table').innerHTML = html;
             document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
-        }
+
+        });
 
         i = 0;
         function putship(cell) {
@@ -54,7 +62,6 @@
 
 <body>
     <h1>海戦ゲーム</h1>
-    <button onclick="createstage()">new room</button>
     <hr>
     <p id="comment"></p>
     <div id="table"></div>
