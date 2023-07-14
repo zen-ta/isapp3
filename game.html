@@ -43,19 +43,21 @@
         }
         i = 0;
         function putship(cell) {
-            if (i == 0) {
-                document.getElementById('comment').innerHTML = "駆逐艦を置く位置を選択してください";
+            if (i <= 2) {
+                if (i == 0) {
+                    document.getElementById('comment').innerHTML = "駆逐艦を置く位置を選択してください";
+                }
+                if (i == 1) {
+                    document.getElementById('comment').innerHTML = "潜水艦を置く位置を選択してください";
+                }
+                //3個置いたら次に行くようにする
+                var ship = ["W", "D", "S"];
+                var cellId = cell.id;  // セルのid属性を取得
+                var jValue = cellId.substring(1);  // jの値を抽出
+                console.log(jValue);
+                cell.innerHTML = ship[i];
+                i = i + 1;
             }
-            if (i == 1) {
-                document.getElementById('comment').innerHTML = "潜水艦を置く位置を選択してください";
-            }
-            //3個置いたら次に行くようにする
-            var ship = ["W", "D", "S"];
-            var cellId = cell.id;  // セルのid属性を取得
-            var jValue = cellId.substring(1);  // jの値を抽出
-            console.log(jValue);
-            cell.innerHTML = ship[i];
-            i = i + 1;
 
         }
 
