@@ -27,7 +27,9 @@
 
             insertParticipation();
             await refreshUsers();
+            await movegame();
             setInterval(refreshUsers, 200);
+            setInterval(movegame, 200);
         });
 
         async function insertParticipation() {
@@ -76,13 +78,11 @@
         }
 
 
-
-        setInterval(() => {
+        function movegame() {
             if (connect == true) {
                 window.location.href = "game.html" + "?id=" + roomId
             }
-
-        }, 2000);
+        }
 
 
     </script>
