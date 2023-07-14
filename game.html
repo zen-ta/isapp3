@@ -19,6 +19,10 @@
 
         //table
         $(document).ready(async function () {
+            makestage();
+        });
+
+        function makestage() {
             var html = '<table id="tbl" border="1" width="600" height="600">';
             html += '<tr><td></td>';
             var alph = ["A", "B", "C", "D", "E"];
@@ -36,9 +40,7 @@
             };
             document.getElementById('table').innerHTML = html;
             document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
-
-        });
-
+        }
         i = 0;
         function putship(cell) {
             if (i == 0) {
