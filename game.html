@@ -12,7 +12,6 @@
     <script>
         osql.requireLogin();
 
-        var me;
         var roomId = osql.getParam('roomId');
 
 
@@ -20,6 +19,7 @@
         //table
         $(document).ready(async function () {
             makestage();
+            getPosition();
         });
 
         function makestage() {
@@ -42,25 +42,35 @@
             document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
         }
         i = 0;
-        function putship(cell) {
+        async function putship(cell) {
             if (i <= 2) {
                 if (i == 0) {
                     document.getElementById('comment').innerHTML = "駆逐艦を置く位置を選択してください";
+                    console.log(i);
                 }
                 if (i == 1) {
                     document.getElementById('comment').innerHTML = "潜水艦を置く位置を選択してください";
+                    console.log(i);
                 }
                 //3個置いたら次に行くようにする
                 var ship = ["W", "D", "S"];
+                var hp = [3, 2, 1];
                 var cellId = cell.id;  // セルのid属性を取得
                 var jValue = cellId.substring(1);  // jの値を抽出
                 console.log(jValue);
                 cell.innerHTML = ship[i];
+                var sql = `insert into Ships (name,hp,place,roomId) values ('${ship[i]}',${hp[i]},${jValue},${roomId}) `;
+                var commentId = await osql.connect(sql);
                 i = i + 1;
             }
 
         }
 
+        async function getPosition(cell) {
+            var cellId = cell.id;  // セルのid属性を取得
+            var jValue = cellId.substring(1);  // jの値を抽出
+            console.log(jValue);
+        }
 
         async function exitgame() {
             me = await osql.getMe();
