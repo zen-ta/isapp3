@@ -38,11 +38,11 @@
 
         async function insertParticipation() {
             var me = await osql.getMe();
-            var sql1 = `select * from Participations where roomId = ${roomId}`;
+            var sql1 = `select * from Participations where roomId = ${roomId}`
             var object = await osql.connect(sql1);
             var order = object.length + 1;
             var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
-            var ParticipationId = await osql.connect(sql2);
+            var participationId = await osql.connectInsert(sql2);
         }
 
         async function refreshUsers() {
@@ -50,10 +50,10 @@
             var objects = await osql.connect(sql);
             var html = '';
             for (var i = 0; i < objects.length; i++) {
-                var user = objects[i];
-                html += user.fname;
-                html += user.lname;
-                html += '<br>';
+                var object = objects[i];
+                html = html + object.fname;
+                html = html + object.lname;
+                html = html + '<br>'
             }
             document.getElementById('members').innerHTML = html;
         }
@@ -93,8 +93,7 @@
     <hr>
     <br>
     メンバー
-    <div id="members">
-    </div>
+    <div id="members"></div>
     <hr>
     <button id="start" onclick="Start()">始める</button>
 </body>
