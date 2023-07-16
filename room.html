@@ -71,7 +71,7 @@
         async function movegame() {
             var turn = `select * from Rooms where turn =1 AND id = ${roomId}`;
             var objects = await osql.connect(turn);
-            if (objects[0].id = roomId) {
+            if (objects[0].id == roomId) {
                 window.location.href = "game.html" + "?id=" + roomId
             }
         }
