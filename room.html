@@ -59,7 +59,7 @@
             me = await osql.getMe();
             var sql = `delete from Participations where userId = '${me.id}'`;
             var commentId = await osql.connect(sql);
-            window.location.replace('index.html');
+
         }
 
         async function Start() {
@@ -85,12 +85,13 @@
     <h1>Game:<span id="roomname"></span></h1>
     <div style="text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <button onclick="exitgame()" onclick="location.href='index.html'">退出</button>
+        <button onclick="exitgame()" ;location.href='index.html'>退出</button>
     </div>
     <hr>
     <br>
     メンバー
-    <div id="members"></div>
+    <div id=" members">
+    </div>
     <hr>
     <button id="start" onclick="Start()">始める</button>
 </body>
