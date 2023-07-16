@@ -15,38 +15,51 @@
         var roomId = osql.getParam('roomId');
 
         $(document).ready(async function () {
-            me = await osql.getMe();
-            document.getElementById('firstname').innerHTML = me.fname;
-            document.getElementById('lastname').innerHTML = me.lname;
+            var sql1 = `select * from Participations where roomId = ${roomId}`
+            var object = await osql.connect(sql1);
+            if (object.length < 2) {
 
-            var sql = `select * from Rooms where id = ${roomId};`;
-            var objects = await osql.connect(sql);
+                me = await osql.getMe();
+                document.getElementById('firstname').innerHTML = me.fname;
+                document.getElementById('lastname').innerHTML = me.lname;
 
-            var room = objects[0];
-            document.getElementById('roomname').innerHTML = room.name;
+                var sql = `select * from Rooms where id = ${roomId};`;
+                var objects = await osql.connect(sql);
 
-            insertParticipation();
-            await refreshUsers();
-            setInterval(refreshUsers, 200);
-            setInterval(movegame, 200);
-            await movegame();
-        });
+                var room = objects[0];
+                document.getElementById('roomname').innerHTML = room.name;
 
-        $(window).on('load', async function () {
-            await refreshUsers();
+                insertParticipation();
+                await refreshUsers();
+                await movegame();
+                setInterval(refreshUsers, 200);
+                setInterval(movegame, 200);
+            } else {
+                document.getElementById('members').innerHTML = '満員です';
+            }
         });
 
         async function insertParticipation() {
             var me = await osql.getMe();
+            var sql = `select * from Participations where userId = '${me.id}'`
             var sql1 = `select * from Participations where roomId = ${roomId}`
+            var object2 = await osql.connect(sql);
             var object = await osql.connect(sql1);
-            var order = object.length + 1;
-            var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
-            var participationId = await osql.connectInsert(sql2);
+            if (object2.length == 0) {
+                var order = object.length + 1;
+                var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
+                var participationId = await osql.connectInsert(sql2);
+            } else {
+                var sql = `delete from Participations where userId = '${me.id}'`;
+                var commentId = await osql.connect(sql);
+                var order = object.length + 1;
+                var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
+                var participationId = await osql.connectInsert(sql2);
+            }
         }
 
         async function refreshUsers() {
-            var sql = `select Users.fname, Users.lname from Users inner join Participations on Users.id = Participations.userId where Participations.roomId = ${roomId};`;
+            var sql = `select * from Users inner join Participations on Users.id = Participations.userId where Participations.roomId = ${roomId};`;
             var objects = await osql.connect(sql);
             var html = '';
             for (var i = 0; i < objects.length; i++) {
@@ -70,14 +83,16 @@
             await osql.connect(sql3);
         }
 
-
         async function movegame() {
-            var turn = `select * from Rooms where turn =1 AND id = ${roomId}`;
-            var objects = await osql.connect(turn);
-            if (objects[0].id == roomId) {
-                window.location.href = "game.html" + "?id=" + roomId
+            var sql = `select * from Rooms where id = ${roomId}`;
+            var objects = await osql.connect(sql);
+            var turn = objects[0].turn;
+            if (turn == 1) {
+                window.location.href = `game.html?roomId=${roomId}`
             }
         }
+
+    </script>
 
 
     </script>

@@ -20,7 +20,6 @@
         //table
         $(document).ready(async function () {
             makestage();
-            getPosition();
         });
 
         function makestage() {
@@ -42,6 +41,7 @@
             document.getElementById('table').innerHTML = html;
             document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
         }
+
         i = 0;
         async function putship(cell) {
             if (i <= 2) {
