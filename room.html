@@ -34,11 +34,11 @@
 
         async function insertParticipation() {
             var me = await osql.getMe();
-            var sql1 = `select * from Participations where roomId = ${roomId}`
+            var sql1 = `select * from Participations where roomId = ${roomId}`;
             var object = await osql.connect(sql1);
             var order = object.length + 1;
             var sql2 = `insert into Participations (userId, orders, roomId) values ('${me.id}', ${order}, ${roomId})`;
-            var ParticipationId = await osql.connectInsert(sql2);
+            var ParticipationId = await osql.connect(sql2);
         }
 
         async function refreshUsers() {
