@@ -27,9 +27,9 @@
 
             insertParticipation();
             await refreshUsers();
-            await movegame();
             setInterval(refreshUsers, 200);
             setInterval(movegame, 200);
+            await movegame();
         });
 
         $(window).on('load', async function () {
