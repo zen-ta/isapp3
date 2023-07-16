@@ -32,6 +32,10 @@
             setInterval(movegame, 200);
         });
 
+        $(window).on('load', async function () {
+            await refreshUsers();
+        });
+
         async function insertParticipation() {
             var me = await osql.getMe();
             var sql1 = `select * from Participations where roomId = ${roomId}`;
@@ -46,20 +50,19 @@
             var objects = await osql.connect(sql);
             var html = '';
             for (var i = 0; i < objects.length; i++) {
-                var object = objects[i];
-                html = html + object.fname;
-                html = html + object.lname;
-                html = html + '<br>'
+                var user = objects[i];
+                html += user.fname;
+                html += user.lname;
+                html += '<br>';
             }
             document.getElementById('members').innerHTML = html;
         }
-
 
         async function exitgame() {
             me = await osql.getMe();
             var sql = `delete from Participations where userId = '${me.id}'`;
             var commentId = await osql.connect(sql);
-
+            window.location.replace('index.html');
         }
 
         async function Start() {
@@ -85,12 +88,12 @@
     <h1>Game:<span id="roomname"></span></h1>
     <div style="text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <button onclick="exitgame()" ;location.href='index.html'>退出</button>
+        <button onclick="exitgame()">退出</button>
     </div>
     <hr>
     <br>
     メンバー
-    <div id=" members">
+    <div id="members">
     </div>
     <hr>
     <button id="start" onclick="Start()">始める</button>
