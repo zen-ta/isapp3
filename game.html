@@ -84,6 +84,13 @@
             window.location.replace('index.html');
         }
 
+        async function deleteship() {
+            me = await osql.getMe();
+            var sql = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
+        }
+
     </script>
 
 </head>
@@ -95,6 +102,7 @@
         <button onclick="exitgame()">退出</button>
     </div>
     <hr>
+    <div style="text-align: right;"><button onclick="deleteship()">リセット</button></div>
     <p id="comment"></p>
     <div id="table"></div>
 
