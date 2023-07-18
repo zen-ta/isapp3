@@ -27,7 +27,6 @@
             me = await osql.getMe();
             var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
             var objects = await osql.connect(sql);
-            console.log(objects);
             var html = '<table id="tbl" border="1" width="600" height="600">';
             html += '<tr><td></td>';
             var alph = ["A", "B", "C", "D", "E"];
@@ -64,6 +63,16 @@
 
         i = 0;
         async function putship(cell) {
+            var cellId = cell.id;  // セルのid属性を取得 // jの値を抽出
+            var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+            var objects = await osql.connect(sql);
+            for (var i = 0; i < objects.length; i++) {
+                var object = objects[i];
+                if (objects.place == cellId) {
+                    console.log(T);
+                }
+            }
+
         }
 
         async function getPosition(cell) {
