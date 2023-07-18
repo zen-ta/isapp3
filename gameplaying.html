@@ -95,6 +95,7 @@
                             var sql3 = `update Ships set place = ${cell.id} where id =${object.id}`;
                             await osql.connect(sql3);
                             makestage();
+                            ship = null;
                         }
                     }
                 } else {
