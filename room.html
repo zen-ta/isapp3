@@ -80,7 +80,7 @@
         }
 
         async function Start() {
-            var sql3 = `update Rooms set turn = 1 where id =${roomId}`;
+            var sql3 = `update Rooms set turn = 0 where id =${roomId}`;
             await osql.connect(sql3);
         }
 
@@ -88,7 +88,7 @@
             var sql = `select * from Rooms where id = ${roomId}`;
             var objects = await osql.connect(sql);
             var turn = objects[0].turn;
-            if (turn == 1) {
+            if (turn == 0) {
                 window.location.href = `game.html?roomId=${roomId}`
             }
         }
