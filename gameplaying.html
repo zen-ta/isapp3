@@ -44,7 +44,6 @@
                     var jValue = cell.substring(1);  // jの値を抽出
                     for (var q = 0; q < objects.length; q++) {
                         var object = objects[q];
-                        console.log(object.place)
                         if (object.place == jValue) {
                             state = true
                             ship = object.name
@@ -68,11 +67,10 @@
             var objects = await osql.connect(sql);
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
-                if (objects.place == cellId) {
-                    console.log(T);
+                if (cellId == object.place) {
+                    cell.style.backgroundColor = "red"
                 }
             }
-
         }
 
         async function getPosition(cell) {
