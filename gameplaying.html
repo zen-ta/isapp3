@@ -45,10 +45,10 @@
                     var jValue = cell.substring(1);  // jの値を抽出
                     for (var q = 0; q < objects.length; q++) {
                         var object = objects[q];
+                        console.log(object.place)
                         if (object.place == jValue) {
                             state = true
                             ship = object.name
-                            console.log(ship);
                         }
                     }
                     if (true) {
