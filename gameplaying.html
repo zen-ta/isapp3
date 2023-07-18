@@ -23,7 +23,11 @@
             makestage();
         });
 
-        function makestage() {
+        async function makestage() {
+            me = await osql.getMe();
+            var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+            var objects = await osql.connect(sql);
+            console.log(objects);
             var html = '<table id="tbl" border="1" width="600" height="600">';
             html += '<tr><td></td>';
             var alph = ["A", "B", "C", "D", "E"];
@@ -35,41 +39,34 @@
                 html += '<tr>';
                 html += '<td >' + (i + 1) + '</td>'
                 for (var j = 0; j < 5; j++) {
-                    html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
+                    var state = false
+                    var ship = ''
+                    var cell = 'j' + j + i
+                    var jValue = cell.substring(1);  // jの値を抽出
+                    for (var q = 0; q < objects.length; q++) {
+                        var object = objects[q];
+                        if (object.place == jValue) {
+                            state = true
+                            ship = object.name
+                            console.log(ship);
+                        }
+                    }
+                    if (true) {
+                        html += '<td onclick="putship(this)" id="j'
+                        html += j + i
+                        html += ship
+                        html += '"> </td>'
+                    } else {
+                        html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
+                    }
                 }
                 html += '</tr>';
             };
             document.getElementById('table').innerHTML = html;
-            document.getElementById('comment').innerHTML = "母艦を置く位置を選択してください";
         }
 
         i = 0;
         async function putship(cell) {
-            me = await osql.getMe();
-            if (i <= 2) {
-                if (i == 0) {
-                    document.getElementById('comment').innerHTML = "駆逐艦を置く位置を選択してください";
-                }
-                if (i == 1) {
-                    document.getElementById('comment').innerHTML = "潜水艦を置く位置を選択してください";
-                }
-                //3個置いたら次に行くようにする
-                var ship = ["W", "D", "S"];
-                var hp = [3, 2, 1];
-                var cellId = cell.id;  // セルのid属性を取得
-                var jValue = cellId.substring(1);  // jの値を抽出
-                cell.innerHTML = ship[i];
-                var sql2 = `select * from Participations where userId = '${me.id}'`
-                var objects = await osql.connect(sql2);
-                var partId = objects[0].id;
-                var sql = `insert into Ships (name,hp,place,participationId) values ('${ship[i]}',${hp[i]},${jValue},${partId}) `;
-                var commentId = await osql.connect(sql);
-                i = i + 1;
-                if (i == 3) {
-                    document.getElementById('comment').innerHTML = '<button onclick="ready()">準備完了</button>'
-                }
-            }
-
         }
 
         async function getPosition(cell) {
@@ -94,23 +91,6 @@
             makestage();
             i = 0;
         }
-
-        async function ready() {
-            var sql3 = `update Rooms set turn = 1 where id =${roomId}`;
-            await osql.connect(sql3);
-        }
-
-        async function movegame() {
-            var sql = `select * from Rooms where id = ${roomId}`;
-            var objects = await osql.connect(sql);
-            var sql = `select * from Rooms where id = ${roomId}`;
-            var objects = await osql.connect(sql);
-            var turn = objects[0].turn;
-            if (turn == 0) {
-                window.location.href = `gameplaying.html?roomId=${roomId}`
-            }
-        }
-
     </script>
 
 </head>
