@@ -61,6 +61,7 @@
         async function refreshUsers() {
             var sql = `select * from Users inner join Participations on Users.id = Participations.userId where Participations.roomId = ${roomId};`;
             var objects = await osql.connect(sql);
+            console.log(objects);
             var html = '';
             for (var i = 0; i < objects.length; i++) {
                 var object = objects[i];
