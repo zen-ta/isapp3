@@ -83,8 +83,17 @@
             }
         }
         async function changecolor(cell) {
+            var table = document.getElementById('tbl');
             var moss = [];
             var digits = String(cell.id).split('').map(Number);
+            for (var i = 0; i < table.rows.length; i++) {
+                var cells = table.rows[i].cells;
+                for (var j = 0; j < cells.length; j++) {
+                    cells[j].style.backgroundColor = '';
+                }
+            }
+
+
             for (var i = 0; i < number.length; i++) {
                 var object = number[i];
                 separete = String(object).split('').map(Number);
