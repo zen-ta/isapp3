@@ -76,9 +76,16 @@
                     }
                     cell.style.backgroundColor = "red";
                     selectedCell = cell;
+                    changecolor(cell);
                 }
             }
         }
+        var number = [];
+        async function changecolor(cell) {
+            var digits = string(cell.id).sprit('').map(Number);
+            console.log(digits);
+        }
+
         async function resetColor(cell) {
             cell.style.backgroundColor = "";
         }
@@ -86,6 +93,7 @@
         async function getPosition(cell) {
             var cellId = cell.id;  // セルのid属性を取得
             var jValue = cellId.substring(1);  // jの値を抽出
+
         }
 
         async function exitgame() {
