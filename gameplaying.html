@@ -99,7 +99,9 @@
                         }
                     }
                 } else {
-
+                    var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = ${roomId};`
+                    var objects = await osql.connect(sql);
+                    console.log(objects);
                 }
             }
         }
