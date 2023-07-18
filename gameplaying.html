@@ -14,6 +14,7 @@
 
         var me;
         var roomId = osql.getParam('roomId');
+        var number = [];
 
 
 
@@ -41,6 +42,7 @@
                     var ship = ''
                     var cell = 'j' + j + i
                     var jValue = cell.substring(1);  // jの値を抽出
+                    number.push(jValue);
                     for (var q = 0; q < objects.length; q++) {
                         var object = objects[q];
                         if (object.place == jValue) {
@@ -80,10 +82,27 @@
                 }
             }
         }
-        var number = [];
         async function changecolor(cell) {
-            var digits = string(cell.id).sprit('').map(Number);
-            console.log(digits);
+            var moss = [];
+            var digits = String(cell.id).split('').map(Number);
+            for (var i = 0; i < number.length; i++) {
+                var object = number[i];
+                separete = String(object).split('').map(Number);
+                if (digits[0] == separete[0] || digits[1] == separete[1]) {
+                    console.log(object[0]);
+                    console.log(separete[0]);
+                    var combineNumber = Array.from(separete).join('');
+                    moss.push(combineNumber);
+                }
+            }
+            for (var i = 0; i < moss.length; i++) {
+                var cellId = moss[i];
+                var cell = document.getElementById(cellId);
+                if (cell) {
+                    cell.style.backgroundColor = "red";
+                }
+            }
+            console.log(moss);
         }
 
         async function resetColor(cell) {
