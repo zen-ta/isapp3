@@ -84,6 +84,7 @@
         async function changecolor(cell) {
             var table = document.getElementById('tbl');
             var moss = [];
+            var shiplace = []
             var digits = String(cell.id).split('').map(Number);
             for (var i = 0; i < table.rows.length; i++) {
                 var cells = table.rows[i].cells;
@@ -92,6 +93,16 @@
                 }
             }
 
+            var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+            var objects = await osql.connect(sql);
+
+            for (var j = 0; j < objects.length; i++) {
+                var object = objects[j];
+                var place = object.place;
+                shiplace.push(place);
+            }
+
+            console.log(shiplace);
 
             for (var i = 0; i < number.length; i++) {
                 var object = number[i];
@@ -101,6 +112,7 @@
                     moss.push(combineNumber);
                 }
             }
+
             for (var i = 0; i < moss.length; i++) {
                 var cellId = moss[i];
                 var cell = document.getElementById(cellId);
