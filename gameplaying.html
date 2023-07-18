@@ -65,7 +65,6 @@
         var selectedCell = null;
         async function putship(cell) {
             var table = document.getElementById('tbl');
-            console.log(table);
             cell.style.backgroundColor = '';
             var cellId = cell.id;  // セルのid属性を取得 // jの値を抽出
             var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
@@ -98,8 +97,6 @@
                 var object = number[i];
                 separete = String(object).split('').map(Number);
                 if (digits[0] == separete[0] || digits[1] == separete[1]) {
-                    console.log(object[0]);
-                    console.log(separete[0]);
                     var combineNumber = Array.from(separete).join('');
                     moss.push(combineNumber);
                 }
@@ -111,7 +108,6 @@
                     cell.style.backgroundColor = "red";
                 }
             }
-            console.log(moss);
         }
 
         async function resetColor(cell) {
