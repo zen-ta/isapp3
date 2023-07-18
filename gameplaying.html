@@ -63,7 +63,7 @@
         i = 0;
         async function putship(cell) {
             var table = document.getElementById('tbl');
-            table.style.backgroundColor = "white"
+            table.style.backgroundColor = "black";
             var cellId = cell.id;  // セルのid属性を取得 // jの値を抽出
             var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
             var objects = await osql.connect(sql);
