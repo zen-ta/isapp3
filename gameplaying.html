@@ -107,7 +107,7 @@
             var objects = await osql.connect(sql);
             var turn = objects[0].turn;
             if (turn == 0) {
-                window.location.href = `game.html?roomId=${roomId}`
+                window.location.href = `gameplaying.html?roomId=${roomId}`
             }
         }
 
@@ -116,7 +116,7 @@
 </head>
 
 <body>
-    <h1>海戦ゲーム</h1>
+    <h1>Playing</h1>
     <div style="text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
         <button onclick="exitgame()">退出</button>
