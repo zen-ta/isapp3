@@ -38,7 +38,7 @@
             for (var i = 0; i < 5; i++) {
                 html += '<tr>';
                 html += '<td >' + (i + 1) + '</td>'
-                for (var j = 0; j < 5; j++) {
+                for (var j = 1; j <= 5; j++) {
                     var state = false
                     var ship = ''
                     var cell = 'j' + j + i
@@ -52,10 +52,8 @@
                         }
                     }
                     if (true) {
-                        html += '<td onclick="putship(this)" id="j'
-                        html += j + i
-                        html += ship
-                        html += '"> </td>'
+                        html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
+                        jValue.innerHTML = ship;
                     } else {
                         html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
                     }
