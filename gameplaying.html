@@ -52,10 +52,9 @@
                         }
                     }
                     if (true) {
-                        html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
-                        cell.innerHTML = ship;
+                        html += `<td onclick="putship(this)" id="${jValue}">${ship}</td>`;
                     } else {
-                        html += '<td onclick="putship(this)" id="j' + j + i + '"> </td>';
+                        html += `<td onclick="putship(this)" id="${jValue}"></td>`;
                     }
                 }
                 html += '</tr>';
