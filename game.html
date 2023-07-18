@@ -88,7 +88,9 @@
             me = await osql.getMe();
             var sql = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
             var objects = await osql.connect(sql);
-            console.log(objects);
+            var object = objects[0];
+            var sql = `delete from Participations where userId = '${object.participationId}'`;
+            var commentId = await osql.connect(sql);
         }
 
     </script>
