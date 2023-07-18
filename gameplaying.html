@@ -87,7 +87,7 @@
                 }
             } else {
                 if (action == 'm') {
-                    var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+                    var sql = `select Ships.id, place, from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
                     var objects = await osql.connect(sql);
                     for (var i = 0; i < objects.length; i++) {
                         var object = objects[i];
@@ -99,16 +99,17 @@
                         }
                     }
                 } else {
-                    var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
+                    var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
                     var objects = await osql.connect(sql);
+                    console.log(objects);
                     for (var i = 0; i < objects.length; i++) {
                         var object = objects[i];
                         if (object.place == cell.id) {
                             console.log(object.hp);
-                            // var hp = object.hp;
-                            // hp = Number(hp) - 1;
-                            // var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
-                            // await osql.connect(sql3);
+                            var hp = object.hp;
+                            hp = Number(hp) - 1;
+                            var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
+                            await osql.connect(sql3);
                         }
                     }
                 }
