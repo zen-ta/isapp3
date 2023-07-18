@@ -96,7 +96,7 @@
             var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
             var objects = await osql.connect(sql);
 
-            for (var j = 0; j < objects.length; i++) {
+            for (var j = 0; j < objects.length; j++) {
                 var object = objects[j];
                 var place = object.place;
                 shiplace.push(place);
