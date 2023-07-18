@@ -15,6 +15,8 @@
         var me;
         var roomId = osql.getParam('roomId');
         var number = [];
+        var action
+        var ship = null;
 
 
 
@@ -63,21 +65,40 @@
 
         i = 0;
         var selectedCell = null;
+
         async function putship(cell) {
-            var table = document.getElementById('tbl');
-            cell.style.backgroundColor = '';
-            var cellId = cell.id;  // セルのid属性を取得 // jの値を抽出
-            var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
-            var objects = await osql.connect(sql);
-            for (var i = 0; i < objects.length; i++) {
-                var object = objects[i];
-                if (cellId == object.place) {
-                    if (selectedCell != null) {
-                        resetColor(selectedCell);
+            if (ship == null) {
+                var table = document.getElementById('tbl');
+                cell.style.backgroundColor = '';
+                var cellId = cell.id;  // セルのid属性を取得 // jの値を抽出
+                var sql = `select name, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+                var objects = await osql.connect(sql);
+                for (var i = 0; i < objects.length; i++) {
+                    var object = objects[i];
+                    if (cellId == object.place) {
+                        if (selectedCell != null) {
+                            resetColor(selectedCell);
+                        }
+                        cell.style.backgroundColor = "red";
+                        selectedCell = cell;
+                        ship = cellId
+                        // changecolor(cell);
                     }
-                    cell.style.backgroundColor = "red";
-                    selectedCell = cell;
-                    // changecolor(cell);
+                }
+            } else {
+                if (action == 'm') {
+                    var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+                    var objects = await osql.connect(sql);
+                    for (var i = 0; i < objects.length; i++) {
+                        var object = objects[i];
+                        if (object.place == ship) {
+                            var sql3 = `update Ships set place = ${cell.id} where id =${object.id}`;
+                            await osql.connect(sql3);
+                            makestage();
+                        }
+                    }
+                } else {
+
                 }
             }
         }
@@ -149,6 +170,14 @@
             makestage();
             i = 0;
         }
+
+        function move() {
+            action = "m"
+        }
+
+        function attack() {
+            action = 'a'
+        }
     </script>
 
 </head>
@@ -161,6 +190,7 @@
     </div>
     <hr>
     <div style="text-align: right;"><button onclick="deleteship()">リセット</button></div>
+    <button onclick="move()">移動</button><button onclick="attack()">攻撃</button>
     <p id="comment"></p>
     <div id="table"></div>
 
