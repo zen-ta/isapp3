@@ -110,6 +110,10 @@
                             hp = Number(hp) - 1;
                             var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                             await osql.connect(sql3);
+                            if (hp == 0) {
+                                var spl4 = `delete from Ships where hp = 0`;
+                                await osql.connect(sql4);
+                            }
                         }
                     }
                 }
