@@ -18,6 +18,7 @@
         var action
         var ship = null;
         var m = null;
+        var turn1 = 0;
 
 
 
@@ -28,10 +29,12 @@
             await makelog();
             await finish();
             await make2();
+            await make3();
             setInterval(turnpage, 200);
             setInterval(makelog, 200);
             setInterval(finish, 200);
             setInterval(make2, 200);
+            setInterval(make3, 200);
         });
 
         async function makestage() {
@@ -137,7 +140,7 @@
                             hp = Number(hp) - 1;
                             console.log(hp);
                             if (hp == 0) {
-                                m = 1;
+                                // m = 1;
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
 
@@ -158,7 +161,7 @@
 
                                 var sql4 = `delete from Ships where hp = ${hp}`;
                                 await osql.connect(sql4);
-                                // await makestage();
+                                await makestage();
                             } else {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
@@ -179,10 +182,10 @@
                                 var commentId = await osql.connect(sql1);
                                 ship = null;
 
-                                // await makestage();
+                                await makestage();
                                 action = null;
                             }
-                            // await makestage();
+                            await makestage();
                         }
                     }
                     if (ex == null) {
@@ -343,6 +346,18 @@
                 m = null;
             }
         }
+
+        async function make3() {
+            var turn2
+
+            var sql1 = `select turn from Rooms where id = ${roomId}`
+            var objects1 = await osql.connect(sql1);
+            var turn2 = Number(objects1[0].turn);
+            if (turn2 - turn1 != 0) {
+                m = 1
+            }
+            turn1 = turn2;
+        } 
     </script>
 
 </head>
