@@ -130,6 +130,7 @@
                             ex = 'hit'
                             var hp = object.hp;
                             hp = Number(hp) - 1;
+                            console.log(hp);
                             if (hp == 0) {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
@@ -148,7 +149,8 @@
                                 var turn = turn + 1;
                                 var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                                 var commentId = await osql.connect(sql1);
-                                var spl4 = `delete from Ships where hp = 0`;
+
+                                var sql4 = `delete from Ships where hp = 0`;
                                 await osql.connect(sql4);
                                 makestage();
                             } else {
