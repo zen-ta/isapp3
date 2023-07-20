@@ -228,10 +228,14 @@
                 var html = ''
                 html += 'あなたの番です'
                 document.getElementById('comment').innerHTML = html;
+                document.getElementById("move").style.display = "block";
+                document.getElementById("attack").style.display = "block";
             } else {
                 var html = ''
                 html += '相手の番です'
                 document.getElementById('comment').innerHTML = html;
+                document.getElementById("move").style.display = "none";
+                document.getElementById("attack").style.display = "none";
             }
         }
     </script>
@@ -246,7 +250,7 @@
     </div>
     <hr>
     <div style="text-align: right;"><button onclick="deleteship()">リセット</button></div>
-    <button onclick="move()">移動</button><button onclick="attack()">攻撃</button>
+    <button onclick="move()" id="move">移動</button><button onclick="attack()" id="attack">攻撃</button>
     <p id="comment"></p>
     <div id="table"></div>
 
