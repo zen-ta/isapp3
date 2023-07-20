@@ -71,6 +71,7 @@
         var selectedCell = null;
 
         async function putship(cell) {
+            makestage();
             me = await osql.getMe();
             if (ship == null) {
                 var table = document.getElementById('tbl');
