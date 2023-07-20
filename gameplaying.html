@@ -118,29 +118,51 @@
                 } else if (action == '攻撃') {
                     var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
                     var objects = await osql.connect(sql);
-                    console.log(objects);
+                    var ex = null;
                     for (var i = 0; i < objects.length; i++) {
                         var object = objects[i];
                         if (object.place == cell.id) {
-                            console.log(object.hp);
+                            ex = 'hit'
                             var hp = object.hp;
                             hp = Number(hp) - 1;
                             var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                             await osql.connect(sql3);
+
+                            var sql1 = `select turn from Rooms where id = ${roomId}`
+                            var objects1 = await osql.connect(sql1);
+                            var turn = Number(objects1[0].turn)
+
+                            var sql5 = `insert into Actions (turn, type, userId, place, shipId) values (${turn}, '${action}', '${me.id}', '${cell.id}', ${object.id})`;
+                            await osql.connect(sql5);
+
+                            var turn = turn + 1;
+                            var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
+                            var commentId = await osql.connect(sql1);
+
                             if (hp == 0) {
                                 var spl4 = `delete from Ships where hp = 0`;
                                 await osql.connect(sql4);
-                                ship = null;
-                                action = null;
-
-                                var sql1 = `select turn from Rooms where id = ${roomId}`
-                                var objects1 = await osql.connect(sql1);
-                                var turn = Number(objects1[0].turn) + 1;
-                                var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
-                                var commentId = await osql.connect(sql1);
+                                makestage();
                             }
+                            ship = null;
+                            action = null;
                         }
                     }
+                    if (ex == null) {
+                        var sql1 = `select turn from Rooms where id = ${roomId}`
+                        var objects1 = await osql.connect(sql1);
+                        var turn = Number(objects1[0].turn)
+
+                        var sql5 = `insert into Actions (turn, type, userId, place) values (${turn}, '${action}', '${me.id}', '${cell.id}')`;
+                        await osql.connect(sql5);
+
+                        var turn = turn + 1;
+                        var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
+                        var commentId = await osql.connect(sql1);
+                    }
+                    ex = null
+                    ship = null;
+                    action = null;
                 }
             }
         }
