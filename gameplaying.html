@@ -214,6 +214,7 @@
         }
 
         async function turnpage() {
+            me = await osql.getMe();
             var sql1 = `select * from Participations where userId = '${me.id}'`
             var objects1 = await osql.connect(sql1);
             var order = objects1[0].orders;
