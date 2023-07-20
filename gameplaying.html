@@ -137,6 +137,7 @@
                             hp = Number(hp) - 1;
                             console.log(hp);
                             if (hp == 0) {
+                                m = 1;
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
 
@@ -157,7 +158,6 @@
 
                                 var sql4 = `delete from Ships where hp = ${hp}`;
                                 await osql.connect(sql4);
-                                m = 1
                                 // await makestage();
                             } else {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
