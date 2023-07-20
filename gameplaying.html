@@ -22,9 +22,10 @@
 
         //table
         $(document).ready(async function () {
-            makestage();
+            await makestage();
             await turnpage();
             await makelog();
+            setInterval(makestage, 200);
             setInterval(turnpage, 200);
             setInterval(makelog, 200);
         });
