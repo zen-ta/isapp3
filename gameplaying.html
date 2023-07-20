@@ -173,9 +173,10 @@
                                 var commentId = await osql.connect(sql1);
                                 ship = null;
 
-                                makestage(); action = null;
+                                await makestage();
+                                action = null;
                             }
-                            makestage();
+                            await makestage();
                         }
                     }
                     if (ex == null) {
@@ -196,9 +197,9 @@
                     ex = null
                     ship = null;
                     action = null;
-                    makestage();
+                    await makestage();
                 }
-                makestage();
+                await makestage();
             }
         }
 
