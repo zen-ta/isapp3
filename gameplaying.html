@@ -152,7 +152,7 @@
 
                                 var sql4 = `delete from Ships where hp = ${hp}`;
                                 await osql.connect(sql4);
-                                makestage();
+                                await makestage();
                             } else {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
