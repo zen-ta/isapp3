@@ -25,8 +25,10 @@
             makestage();
             await turnpage();
             await makelog();
+            await finish();
             setInterval(turnpage, 200);
             setInterval(makelog, 200);
+            setInterval(finish, 200);
         });
 
         async function makestage() {
@@ -319,6 +321,19 @@
                     html = html + '<br>'
                     document.getElementById('log').innerHTML = html;
                 }
+            }
+        }
+
+        async function finish() {
+            var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+            var objects = await osql.connect(sql);
+
+            var sql2 = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId} AND userId != '${me.id}'`
+            var objects2 = await osql.connect(sql2);
+            if (objects.length == 0) {
+                document.getElementById('table').innerHTML = '<p style="text-align:center;font-size:100px;">あなたの負け</p>'
+            } else if (objects2.length == 0) {
+                document.getElementById('table').innerHTML = '<p style="text-align:center;font-size:100px;">あなたの勝ち</p>'
             }
         }
     </script>
