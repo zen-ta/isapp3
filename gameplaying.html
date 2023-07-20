@@ -207,15 +207,15 @@
                             var object14 = objects14[q];
                             shiplen.push(object14.place);
                         }
-
-                        var p1 = cell.id - 11;
-                        var p2 = cell.id - 1;
-                        var p3 = cell.id + 9;
-                        var p4 = cell.id - 10;
-                        var p5 = cell.id + 10;
-                        var p6 = cell.id - 9;
-                        var p7 = cell.id + 1;
-                        var p8 = cell.id + 11;
+                        var num = Number(cell.id)
+                        var p1 = num - 11;
+                        var p2 = num - 1;
+                        var p3 = num + 9;
+                        var p4 = num - 10;
+                        var p5 = num + 10;
+                        var p6 = num - 9;
+                        var p7 = num + 1;
+                        var p8 = num + 11;
                         hantei(len, p1);
                         hantei(len, p2);
                         hantei(len, p3);
@@ -224,7 +224,8 @@
                         hantei(len, p6);
                         hantei(len, p7);
                         hantei(len, p8);
-
+                        console.log(len);
+                        console.log(shiplen);
                         for (var p = 0; p < len.length; p++) {
                             for (var k = 0; k < shiplen.length; k++) {
                                 if (len[p] == shiplen[q]) {
