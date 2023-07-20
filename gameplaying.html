@@ -415,14 +415,16 @@
             var objects2 = await osql.connect(sql2);
             var sql12 = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId} AND userId != '${me.id}'`;
             var objects12 = await osql.connect(sql12);
+            html = html + '自分'
             for (var i = 0; i < objects2.length; i++) {
                 var object2 = objects2[i]
-                html = html + `自分${object2.name}:${object2.hp}`
+                html = html + `${object2.name}:HP${object2.hp}`
             }
             html = html + '  '
+            html = html + '相手'
             for (var j = 0; j < objects12.length; j++) {
                 var object12 = objects12[j]
-                html = html + `相手${object12.name}:${object12.hp}`
+                html = html + `${object12.name}:HP${object12.hp}`
             }
 
             document.getElementById('hp').innerHTML = html;
