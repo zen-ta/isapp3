@@ -131,6 +131,23 @@
                             var hp = object.hp;
                             hp = Number(hp) - 1;
                             if (hp == 0) {
+                                var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
+                                await osql.connect(sql3);
+
+                                var sql1 = `select turn from Rooms where id = ${roomId}`
+                                var objects1 = await osql.connect(sql1);
+                                var turn = Number(objects1[0].turn);
+
+                                var sql4 = `select * from Participations where userId = '${me.id}'`
+                                var objects4 = await osql.connect(sql4);
+                                var partId = objects4[0].id
+
+                                var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '${action}', ${partId}, '${cell.id}', ${object.id})`;
+                                await osql.connect(sql5);
+
+                                var turn = turn + 1;
+                                var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
+                                var commentId = await osql.connect(sql1);
                                 var spl4 = `delete from Ships where hp = 0`;
                                 await osql.connect(sql4);
                                 makestage();
