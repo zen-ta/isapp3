@@ -87,7 +87,7 @@
                 }
             } else {
                 if (action == 'm') {
-                    var sql = `select Ships.id, place, from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
+                    var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
                     var objects = await osql.connect(sql);
                     for (var i = 0; i < objects.length; i++) {
                         var object = objects[i];
