@@ -154,7 +154,7 @@
                                 var objects4 = await osql.connect(sql4);
                                 var partId = objects4[0].id
 
-                                var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '${action}', ${partId}, '${cell.id}', ${object.id})`;
+                                var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '戦艦がひとつ沈んだ', ${partId}, '${cell.id}', ${object.id})`;
                                 await osql.connect(sql5);
 
                                 var turn = turn + 1;
@@ -163,6 +163,8 @@
 
                                 var sql4 = `delete from Ships where hp = ${hp}`;
                                 await osql.connect(sql4);
+                                ship = null;
+                                action = null;
 
                             } else {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
@@ -176,7 +178,7 @@
                                 var objects4 = await osql.connect(sql4);
                                 var partId = objects4[0].id
 
-                                var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '${action}', ${partId}, '${cell.id}', ${object.id})`;
+                                var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '攻撃が当たった', ${partId}, '${cell.id}', ${object.id})`;
                                 await osql.connect(sql5);
 
                                 var turn = turn + 1;
@@ -189,16 +191,54 @@
                         }
                     }
                     if (ex == null) {
+                        var len = [];
+                        var shiplen = [];
                         var sql4 = `select * from Participations where userId = '${me.id}'`
                         var objects4 = await osql.connect(sql4);
                         var partId = objects4[0].id
                         var sql1 = `select turn from Rooms where id = ${roomId}`
                         var objects1 = await osql.connect(sql1);
                         var turn = Number(objects1[0].turn)
+                        var state = null
 
-                        var sql5 = `insert into Actions (turn, type, participationId, place) values (${turn}, '${action}', '${partId}', '${cell.id}')`;
-                        await osql.connect(sql5);
+                        var sql14 = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId} AND userId != '${me.id}'`
+                        var objects14 = await osql.connect(sql14);
+                        for (var q = 0; q < objects14.length; q++) {
+                            var object14 = objects14[q];
+                            shiplen.push(object14.place);
+                        }
 
+                        var p1 = cell.id - 11;
+                        var p2 = cell.id - 1;
+                        var p3 = cell.id + 9;
+                        var p4 = cell.id - 10;
+                        var p5 = cell.id + 10;
+                        var p6 = cell.id - 9;
+                        var p7 = cell.id + 1;
+                        var p8 = cell.id + 11;
+                        hantei(len, p1);
+                        hantei(len, p2);
+                        hantei(len, p3);
+                        hantei(len, p4);
+                        hantei(len, p5);
+                        hantei(len, p6);
+                        hantei(len, p7);
+                        hantei(len, p8);
+
+                        for (var p = 0; p < len.length; p++) {
+                            for (var k = 0; k < shiplen.length; k++) {
+                                if (len[p] == shiplen[q]) {
+                                    state = '近い'
+                                }
+                            }
+                        }
+                        if (state == '近い') {
+                            var sql5 = `insert into Actions (turn, type, participationId, place) values (${turn}, '近くに船がいる', '${partId}', '${cell.id}')`;
+                            await osql.connect(sql5);
+                        } else {
+                            var sql5 = `insert into Actions (turn, type, participationId, place) values (${turn}, '${action}', '${partId}', '${cell.id}')`;
+                            await osql.connect(sql5);
+                        }
                         var turn = turn + 1;
                         var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                         var commentId = await osql.connect(sql1);
@@ -317,8 +357,19 @@
                     separete[0] = alph[separete[0] - 1];
                     separete[1] = separete[1] + 1
                     var combineNumber = Array.from(separete).join('');
-                    html = html + `${object9.turn}ターン目：${combineNumber}に攻撃！！`
-                    html = html + '<br>'
+                    if (object9.type == '攻撃が当たった') {
+                        html = html + `${object9.turn}ターン目：${combineNumber}に${object9.type}!`
+                        html = html + '<br>'
+                    } else if (object9.type == '戦艦がひとつ沈んだ') {
+                        html = html + `${object9.turn}ターン目：${combineNumber}に攻撃し${object9.type}!`
+                        html = html + '<br>'
+                    } else if (object9.type == '近くに船がいる') {
+                        html = html + `${object9.turn}ターン目：${combineNumber}に攻撃!${object9.type}`
+                        html = html + '<br>'
+                    } else {
+                        html = html + `${object9.turn}ターン目：${combineNumber}に${object9.type}!`
+                        html = html + '<br>'
+                    }
                     document.getElementById('log').innerHTML = html;
                 }
             }
@@ -375,6 +426,17 @@
 
             document.getElementById('hp').innerHTML = html;
         }
+
+        function hantei(ary, num) {
+            var separete = String(num).split('').map(Number);
+            var num1 = separete[0];
+            var num2 = separete[1];
+            if (num1 > 0 && num1 <= 5 && num2 >= 0 && num2 < 5) {
+                var combineNumber = Array.from(separete).join('');
+                ary.push(combineNumber)
+            }
+        }
+
     </script>
 
 </head>
