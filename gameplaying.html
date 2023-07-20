@@ -172,8 +172,10 @@
                                 var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                                 var commentId = await osql.connect(sql1);
                                 ship = null;
-                                action = null;
+
+                                makestage(); action = null;
                             }
+                            makestage();
                         }
                     }
                     if (ex == null) {
@@ -194,6 +196,7 @@
                     ex = null
                     ship = null;
                     action = null;
+                    makestage();
                 }
             }
         }
