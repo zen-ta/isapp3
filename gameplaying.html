@@ -311,9 +311,11 @@
                 var object9 = objects9[j];
                 if (object9.type == '移動') {
                     html = html + `${object9.turn}ターン目：移動しました`
+                    html = html + '<br>'
                     document.getElementById('log').innerHTML = html;
                 } else {
                     html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                    html = html + '<br>'
                     document.getElementById('log').innerHTML = html;
                 }
             }
