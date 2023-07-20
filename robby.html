@@ -26,15 +26,12 @@
             var name = document.getElementById('roomname').value;
             var sql = `insert into Rooms (name) values('${name}');`;
             var roomId = await osql.connectInsert(sql);
-            console.log(roomId);
-
             refreshRooms();
         }
 
         async function refreshRooms() {
             var sql = 'select * from Rooms;';
             var objects = await osql.connect(sql);
-            console.log(objects);
             var html = '';
             html = html + '<table border="1">';
             for (var i = 0; i < objects.length; i++) {
@@ -54,18 +51,19 @@
 </head>
 
 <body>
-    <h1>robby</h1>
-    <div style="text-align: right;">
+    <h1 style="text-align:center;font-size:50px;">ロビー</h1>
+    <div style=" text-align: right;">
         ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
-        <a href="index.html">top</a>
+        <a href="index.html"
+            style="display:inline;background-color: #ff0000; color: #fff; padding: 10px 20px; text-decoration: none; border-radius: 5px; text-align: center; cursor: pointer;">top</a>
     </div>
     <hr>
     <div>
-        <h2>create room</h2>
+        <h2 style="font-size:30px;">部屋を作る</h2>
         <input id="roomname" type="text">
-        <button onclick="createRoom()">new room</button>
+        <button onclick="createRoom()">作る</button>
     </div>
-    <h2>rooms</h2>
+    <h2>ルーム一覧</h2>
     <div id="rooms"></div>
 </body>
 

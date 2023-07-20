@@ -67,6 +67,7 @@
         var selectedCell = null;
 
         async function putship(cell) {
+            me = await osql.getMe();
             if (ship == null) {
                 var table = document.getElementById('tbl');
                 cell.style.backgroundColor = '';
@@ -86,7 +87,7 @@
                     }
                 }
             } else {
-                if (action == 'm') {
+                if (action == '移動') {
                     var sql = `select Ships.id, place from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
                     var objects = await osql.connect(sql);
                     for (var i = 0; i < objects.length; i++) {
@@ -96,6 +97,7 @@
                             await osql.connect(sql3);
                             makestage();
                             ship = null;
+                            // var sql = `insert into Actions (turn, type, userId, place, shipId) values (, ${action}, ${me.id}, ${cell.id}, ${object.id})`
                         }
                     }
                 } else {
@@ -191,7 +193,7 @@
         }
 
         function move() {
-            action = "m"
+            action = "移動"
         }
 
         function attack() {
