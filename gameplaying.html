@@ -17,6 +17,7 @@
         var number = [];
         var action
         var ship = null;
+        var m = null;
 
 
 
@@ -26,9 +27,11 @@
             await turnpage();
             await makelog();
             await finish();
+            await make2();
             setInterval(turnpage, 200);
             setInterval(makelog, 200);
             setInterval(finish, 200);
+            setInterval(make2, 200);
         });
 
         async function makestage() {
@@ -154,7 +157,8 @@
 
                                 var sql4 = `delete from Ships where hp = ${hp}`;
                                 await osql.connect(sql4);
-                                await makestage();
+                                m = 1
+                                // await makestage();
                             } else {
                                 var sql3 = `update Ships set hp = ${hp} where id =${object.id}`;
                                 await osql.connect(sql3);
@@ -175,10 +179,10 @@
                                 var commentId = await osql.connect(sql1);
                                 ship = null;
 
-                                await makestage();
+                                // await makestage();
                                 action = null;
                             }
-                            await makestage();
+                            // await makestage();
                         }
                     }
                     if (ex == null) {
@@ -329,6 +333,13 @@
                 document.getElementById('table').innerHTML = '<p style="text-align:center;font-size:100px;">あなたの負け</p>'
             } else if (objects2.length == 0) {
                 document.getElementById('table').innerHTML = '<p style="text-align:center;font-size:100px;">あなたの勝ち</p>'
+            }
+        }
+
+        function make2() {
+            if (m == 1) {
+                makestage();
+                m = null;
             }
         }
     </script>
