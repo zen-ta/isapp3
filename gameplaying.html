@@ -97,7 +97,12 @@
                             await osql.connect(sql3);
                             makestage();
                             ship = null;
-                            // var sql = `insert into Actions (turn, type, userId, place, shipId) values (, ${action}, ${me.id}, ${cell.id}, ${object.id})`
+
+                            var sql1 = `select turn from Rooms where id = ${roomId}`
+                            var objects1 = await osql.connect(sql1);
+                            var turn = Number(objects1[0].turn) + 1;
+                            var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
+                            var commentId = await osql.connect(sql1);
                         }
                     }
                 } else {
