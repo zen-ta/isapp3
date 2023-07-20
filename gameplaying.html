@@ -116,8 +116,10 @@
                                 var object9 = objects9[j];
                                 if (object9.type == '移動') {
                                     html = html + `${object9.turn}ターン目：移動しました`
+                                    document.getElementById('log').innerHTML = html;
                                 } else {
                                     html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                                    document.getElementById('log').innerHTML = html;
                                 }
                             }
                             var turn = turn + 1;
@@ -160,8 +162,10 @@
                                 var object9 = objects9[j];
                                 if (object9.type == '移動') {
                                     html = html + `${object9.turn}ターン目：移動しました`
+                                    document.getElementById('log').innerHTML = html;
                                 } else {
                                     html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                                    document.getElementById('log').innerHTML = html;
                                 }
                             }
 
