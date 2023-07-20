@@ -306,7 +306,12 @@
                     html = html + '<br>'
                     document.getElementById('log').innerHTML = html;
                 } else {
-                    html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                    var alph = ['A', 'B', 'C', 'D', 'E']
+                    var separete = String(object9.place).split('').map(Number);
+                    separate[0] = alph[separete[0] - 1];
+                    separete[1] = separete[1] + 1
+                    var combineNumber = Array.from(separete).join('');
+                    html = html + `${object9.turn}ターン目：${combineNumber}に攻撃しました`
                     html = html + '<br>'
                     document.getElementById('log').innerHTML = html;
                 }
