@@ -72,7 +72,6 @@
 
         async function putship(cell) {
             me = await osql.getMe();
-            var html = ''
             if (ship == null) {
                 var table = document.getElementById('tbl');
                 cell.style.backgroundColor = '';
@@ -305,6 +304,7 @@
         }
 
         async function makelog() {
+            var html = ''
             var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
             var objects9 = await osql.connect(sql9);
             for (var j = 0; j < objects9.length; j++) {
