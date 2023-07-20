@@ -23,8 +23,8 @@
         //table
         $(document).ready(async function () {
             makestage();
-            turnpage();
-            setInterval(refreshUsers, 200);
+            await turnpage();
+            setInterval(turnpage, 200);
         });
 
         async function makestage() {
