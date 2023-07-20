@@ -70,6 +70,7 @@
 
         async function putship(cell) {
             me = await osql.getMe();
+            var html = ''
             if (ship == null) {
                 var table = document.getElementById('tbl');
                 cell.style.backgroundColor = '';
@@ -105,6 +106,8 @@
                             var sql5 = `insert into Actions (turn, type, userId, place, shipId) values (${turn}, '${action}', '${me.id}', '${cell.id}', ${object.id})`;
                             await osql.connect(sql5);
 
+                            var html = html + `${turn}ターン目：移動しました！`
+                            document.getElementById('log').innerHTML = html
                             var turn = turn + 1;
                             var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                             var commentId = await osql.connect(sql1);
@@ -282,6 +285,7 @@
     <button onclick="move()" id="move">移動</button><button onclick="attack()" id="attack">攻撃</button>
     <p id="comment"></p>
     <div id="table"></div>
+    <div id="log"></div>
 
 </body>
 
