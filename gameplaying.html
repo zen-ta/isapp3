@@ -100,11 +100,12 @@
 
                             var sql1 = `select turn from Rooms where id = ${roomId}`
                             var objects1 = await osql.connect(sql1);
+                            var turn = Number(objects1[0].turn)
 
                             var sql5 = `insert into Actions (turn, type, userId, place, shipId) values (${turn}, ${action}, '${me.id}', '${cell.id}', ${object.id})`;
                             await osql.connect(sql5);
 
-                            var turn = Number(objects1[0].turn) + 1;
+                            var turn = turn + 1;
                             var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                             var commentId = await osql.connect(sql1);
 
