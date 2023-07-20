@@ -113,6 +113,7 @@
                             if (hp == 0) {
                                 var spl4 = `delete from Ships where hp = 0`;
                                 await osql.connect(sql4);
+                                ship = null;
                             }
                         }
                     }
