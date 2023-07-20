@@ -263,17 +263,6 @@
             window.location.replace('index.html');
         }
 
-        async function deleteship() {
-            me = await osql.getMe();
-            var sql = `select * from Ships inner join Participations on Ships.participationId = Participations.id where Participations.userId = '${me.id}';`;
-            var objects = await osql.connect(sql);
-            var object = objects[0];
-            var sql = `delete from Ships where participationId = '${object.participationId}'`;
-            var commentId = await osql.connect(sql);
-            makestage();
-            i = 0;
-        }
-
         function move() {
             action = "移動"
         }
@@ -347,7 +336,6 @@
         <button onclick="exitgame()">退出</button>
     </div>
     <hr>
-    <div style="text-align: right;"><button onclick="deleteship()">リセット</button></div>
     <button onclick="move()" id="move">移動</button><button onclick="attack()" id="attack">攻撃</button>
     <p id="comment"></p>
     <div id="table"></div>

@@ -21,6 +21,8 @@
         //table
         $(document).ready(async function () {
             makestage();
+            await makeb();
+            setInterval(makeb, 200);
         });
 
         function makestage() {
@@ -65,9 +67,9 @@
                 var sql = `insert into Ships (name,hp,place,participationId) values ('${ship[i]}',${hp[i]},${jValue},${partId}) `;
                 var commentId = await osql.connect(sql);
                 i = i + 1;
-                if (i == 3) {
-                    document.getElementById('comment').innerHTML = '<button onclick="ready()">準備完了</button>'
-                }
+                // if (i == 3) {
+                //     document.getElementById('comment').innerHTML = '<button onclick="ready()">準備完了</button>'
+                // }
             }
 
         }
@@ -107,6 +109,14 @@
             var turn = objects[0].turn;
             if (turn == 1) {
                 window.location.href = `gameplaying.html?roomId=${roomId}`
+            }
+        }
+
+        async function makeb() {
+            var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
+            var objects = await osql.connect(sql);
+            if (objects.length == 6) {
+                document.getElementById('comment').innerHTML = '<button onclick="ready()">準備完了</button>'
             }
         }
 
