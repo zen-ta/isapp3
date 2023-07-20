@@ -24,7 +24,9 @@
         $(document).ready(async function () {
             makestage();
             await turnpage();
+            await makelog();
             setInterval(turnpage, 200);
+            setInterval(makelog, 200);
         });
 
         async function makestage() {
@@ -110,18 +112,18 @@
                             var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '${action}', '${partId}', '${cell.id}', ${object.id})`;
                             await osql.connect(sql5);
 
-                            var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
-                            var objects9 = await osql.connect(sql9);
-                            for (var j = 0; j < objects9.length; j++) {
-                                var object9 = objects9[j];
-                                if (object9.type == '移動') {
-                                    html = html + `${object9.turn}ターン目：移動しました`
-                                    document.getElementById('log').innerHTML = html;
-                                } else {
-                                    html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
-                                    document.getElementById('log').innerHTML = html;
-                                }
-                            }
+                            // var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
+                            // var objects9 = await osql.connect(sql9);
+                            // for (var j = 0; j < objects9.length; j++) {
+                            //     var object9 = objects9[j];
+                            //     if (object9.type == '移動') {
+                            //         html = html + `${object9.turn}ターン目：移動しました`
+                            //         document.getElementById('log').innerHTML = html;
+                            //     } else {
+                            //         html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                            //         document.getElementById('log').innerHTML = html;
+                            //     }
+                            // }
                             var turn = turn + 1;
                             var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
                             var commentId = await osql.connect(sql1);
@@ -156,18 +158,18 @@
                             var sql5 = `insert into Actions (turn, type, participationId, place, shipId) values (${turn}, '${action}', '${partId}', '${cell.id}', ${object.id})`;
                             await osql.connect(sql5);
 
-                            var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
-                            var objects9 = await osql.connect(sql9);
-                            for (var j = 0; j < objects9.length; j++) {
-                                var object9 = objects9[j];
-                                if (object9.type == '移動') {
-                                    html = html + `${object9.turn}ターン目：移動しました`
-                                    document.getElementById('log').innerHTML = html;
-                                } else {
-                                    html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
-                                    document.getElementById('log').innerHTML = html;
-                                }
-                            }
+                            // var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
+                            // var objects9 = await osql.connect(sql9);
+                            // for (var j = 0; j < objects9.length; j++) {
+                            //     var object9 = objects9[j];
+                            //     if (object9.type == '移動') {
+                            //         html = html + `${object9.turn}ターン目：移動しました`
+                            //         document.getElementById('log').innerHTML = html;
+                            //     } else {
+                            //         html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                            //         document.getElementById('log').innerHTML = html;
+                            //     }
+                            // }
 
                             var turn = turn + 1;
                             var sql1 = `update Rooms set turn = ${turn} where id = '${roomId}';`;
@@ -299,6 +301,21 @@
                 document.getElementById('comment').innerHTML = html;
                 document.getElementById("move").style.display = "none";
                 document.getElementById("attack").style.display = "none";
+            }
+        }
+
+        async function makelog() {
+            var sql9 = `select *from Actions inner join Participations on Actions.participationId = Participations.id where Participations.roomId = ${roomId};`
+            var objects9 = await osql.connect(sql9);
+            for (var j = 0; j < objects9.length; j++) {
+                var object9 = objects9[j];
+                if (object9.type == '移動') {
+                    html = html + `${object9.turn}ターン目：移動しました`
+                    document.getElementById('log').innerHTML = html;
+                } else {
+                    html = html + `${object9.turn}ターン目：${object9.place}に攻撃しました`
+                    document.getElementById('log').innerHTML = html;
+                }
             }
         }
     </script>
