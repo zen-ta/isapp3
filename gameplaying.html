@@ -365,12 +365,12 @@
             var objects12 = await osql.connect(sql12);
             for (var i = 0; i < objects2.length; i++) {
                 var object2 = objects2[i]
-                html = html + `${object2.name}:${object2.hp}`
+                html = html + `自分${object2.name}:${object2.hp}`
             }
             html = html + '  '
             for (var j = 0; j < objects12.length; j++) {
                 var object12 = objects12[j]
-                html = html + `${object12.name}:${object12.hp}`
+                html = html + `相手${object12.name}:${object12.hp}`
             }
 
             document.getElementById('hp').innerHTML = html;
@@ -382,7 +382,6 @@
 <body>
     <h1>Playing</h1>
     <div style="text-align: right;">
-        ようこそ<span id="lastname"></span> <span id="firstname"></span>さん
         <button onclick="exitgame()">退出</button>
     </div>
     <hr>
