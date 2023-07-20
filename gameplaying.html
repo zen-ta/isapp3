@@ -99,6 +99,7 @@
                             await osql.connect(sql3);
                             makestage();
                             ship = null;
+                            action = null;
 
                             var sql1 = `select turn from Rooms where id = ${roomId}`
                             var objects1 = await osql.connect(sql1);
@@ -107,7 +108,7 @@
                             var commentId = await osql.connect(sql1);
                         }
                     }
-                } else {
+                } else if (action == '攻撃') {
                     var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
                     var objects = await osql.connect(sql);
                     console.log(objects);
@@ -123,6 +124,7 @@
                                 var spl4 = `delete from Ships where hp = 0`;
                                 await osql.connect(sql4);
                                 ship = null;
+                                action = null;
 
                                 var sql1 = `select turn from Rooms where id = ${roomId}`
                                 var objects1 = await osql.connect(sql1);
