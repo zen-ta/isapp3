@@ -122,15 +122,44 @@
 
     </script>
 
+    <style>
+        /* Set the background color of the body to watercolor */
+        body {
+            background-color: #b9e4f5;
+            /* Adjust the color as needed */
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+        }
+
+        .custom-button {
+            background-color: #e60000;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Hover effect for the button */
+        .custom-button:hover {
+            background-color: #e60000;
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>海戦ゲーム</h1>
+    <h1 style="text-align:center;font-size:40px;">準備画面</h1>
     <div style="text-align: right;">
-        <button onclick="exitgame()">退出</button>
+        <button onclick="exitgame()" class="custom-button">退出</button>
     </div>
     <hr>
-    <div style="text-align: right;"><button onclick="deleteship()">リセット</button></div>
+    <div style="text-align: right;"><button onclick="deleteship()" class="custom-button">リセット</button></div>
     <p id="comment"></p>
     <div id="table"></div>
 
