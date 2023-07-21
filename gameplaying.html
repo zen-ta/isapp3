@@ -442,22 +442,126 @@
 
     </script>
 
+    <style>
+        /* Set the background color of the body to watercolor */
+        body {
+            background-color: #b9e4f5;
+            /* Adjust the color as needed */
+            margin: 0;
+            /* Remove default margin */
+            padding: 0;
+            /* Remove default padding */
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Style the table container */
+        #table-container {
+            flex: 0 0 calc(60% - 10px);
+            /* Adjust the width as needed */
+            margin-right: 10px;
+        }
+
+        /* Style the log container */
+        #log-container {
+            flex: 0 0 calc(40% - 10px);
+            /* Adjust the width as needed */
+            margin-left: 10px;
+        }
+
+        /* Style the log section */
+        #log {
+            background-color: #ffffff;
+            padding: 10px;
+        }
+
+        /* Add a border to the table for better separation */
+        #tbl {
+            border: 2px solid #000;
+        }
+
+        .custom-button {
+            background-color: #e60000;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Hover effect for the button */
+        .custom-button:hover {
+            background-color: #e60000;
+        }
+
+        #move {
+            display: block;
+            float: left;
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+            margin-right: 10px;
+            /* Add some space between the buttons */
+        }
+
+        /* Hover effect for the "始める" button */
+        #move:hover {
+            background-color: #0056b3;
+        }
+
+        #attack {
+            display: block;
+            float: left;
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Hover effect for the "始める" button */
+        #attack:hover {
+            background-color: #0056b3;
+        }
+    </style>
+
 </head>
 
 <body>
-    <h1>Playing</h1>
     <div style="text-align: right;">
-        <button onclick="exitgame()">退出</button>
+        <button onclick="exitgame()" class="custom-button">退出</button>
     </div>
     <hr>
     <button onclick="move()" id="move">移動</button><button onclick="attack()" id="attack">攻撃</button>
     <p id="hp"></p>
     <p id="comment"></p>
-    <div id="table"></div>
-    <div>
-        <h2>ログ</h2>
-        <div id="log"></div>
-    </div>
+    <div class="container">
+        <!-- Table container -->
+        <div id="table-container">
+            <div id="table"></div>
+        </div>
+        <!-- Log container -->
+        <div id="log-container">
+            <h2>ログ</h2>
+            <div id="log"></div>
+        </div>
 
 </body>
 

@@ -116,7 +116,7 @@
             var sql = `select Ships.id, place, hp from Ships inner join Participations on Ships.participationId = Participations.id where Participations.roomId = ${roomId};`
             var objects = await osql.connect(sql);
             if (objects.length == 6) {
-                document.getElementById('comment').innerHTML = '<button onclick="ready()">準備完了</button>'
+                document.getElementById('comment').innerHTML = '<button onclick="ready()" id="start">準備完了</button>'
             }
         }
 
@@ -148,6 +148,24 @@
         /* Hover effect for the button */
         .custom-button:hover {
             background-color: #e60000;
+        }
+
+        #start {
+            display: block;
+            margin: 0 auto;
+            font-size: 24px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        /* Hover effect for the "始める" button */
+        #start:hover {
+            background-color: #0056b3;
         }
     </style>
 
